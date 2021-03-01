@@ -9,7 +9,8 @@
     "UpdateUrl": "https://github.com/amadare42/HunterPie.ComboMeterPlugin/releases/latest/download/",
     "MinimumVersion": "1.0.5.0",
     "FileHashes": {
-      "ComboMeter.dll": "$version:ComboMeter.dll$"
+      "ComboMeter.dll": "$version:ComboMeter.dll$",
+      "icon.png": "$hash:icon.png$"
     }
   }
 }
