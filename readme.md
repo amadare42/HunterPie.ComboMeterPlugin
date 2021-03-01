@@ -11,11 +11,11 @@ It can be used for:
 
 Here is example of meter and summary notification:
 
-![](readme/meter-preview.jpg)
+![](./readme/meter-preview.jpg)
 
 After expedition summary is displayed:
 
-![](readme/summary-preview.jpg)
+![](./readme/summary-preview.jpg)
 
 <!--<hide>-->
 
@@ -41,13 +41,13 @@ You can configure how plugin is evaluating combos by changing combo grade thresh
 
 Combo grade is evaluated based on multiplier to average HP of monsters in current location. So if `AvgHpMultiplier` is 0.05 and in location there are 3 monsters with 5000, 10000, 5000 max HP then threshold will be `(5000+10000+5000)*0.05=100` damage.
 
-`Header` can contain `{Target}` placeholder which will be replaced with resulting damage threshold for this grade.
+`Header` can contain "{Target}" placeholder which will be replaced with resulting damage threshold for this grade.
 
 <!--<hide>-->
 ## Build
 
 Project is dependent on `HunterPie.Core.dll` and `HunterPie.UI.dll` binaries. They will be referenced from `..\HunterPie\HunterPie.Core.dll` and `..\HunterPie\HunterPie.UI.dll` directories. So in order to build plugin, you have to checkout HunterPie as sibling to ComboMeter repo.
 
-You can run `ComboMeter.TestApp` to quickly test components design and behavior without running HunterPie itself. 
+You can run `ComboMeter.TestApp` to quickly test components design and behavior without running HunterPie itself.
 
 <!--</hide>-->
