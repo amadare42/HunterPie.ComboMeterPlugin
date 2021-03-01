@@ -17,6 +17,24 @@ After expedition summary is displayed:
 
 ![](readme/summary-preview.jpg)
 
+<!--<hide>-->
+
+## Installation
+
+Use HunterPie's plugin manager to find and install "Combo Meter" plugin.
+
+**OR**
+
+1. Drag'n'drop icon below to into HunterPie window:
+
+   [<img src="https://raw.githubusercontent.com/amadare42/HunterPie.ComboMeterPlugin/master/readme/plugin.svg">](https://github.com/amadare42/HunterPie.ComboMeterPlugin/releases/download/v0.1.0.0/module.json)
+
+   > NOTE: if that's doesn't work, click on icon with right mouse button and select "Save Link As". Then dran'n'drop saved file into HunterPie window.
+
+2. Restart application *(there will be notification that will prompt you to do so)*
+
+<!--</hide>-->
+
 ## Configuration
 
 You can configure how plugin is evaluating combos by changing combo grade thresholds and combo timeout. To do that, open `config.json` (with plugin or HunterPie disabled) in plugin directory and edit `ComboGrades` & `ComboTimeout` values respectively.

@@ -36,14 +36,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HunterPie.Core">
-      <HintPath>..\HunterPie\HunterPie\bin\Debug\HunterPie.Core.dll</HintPath>
+      <HintPath>$(ProjectDir)..\..\HunterPie\HunterPie\bin\Debug\HunterPie.Core.dll</HintPath>
     </Reference>
     <Reference Include="HunterPie.UI">
-      <HintPath>..\HunterPie\HunterPie\bin\Debug\HunterPie.UI.dll</HintPath>
+      <HintPath>$(ProjectDir)..\..\HunterPie\HunterPie\bin\Debug\HunterPie.UI.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\HunterPie\HunterPie\bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(ProjectDir)..\..\HunterPie\HunterPie\bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -132,12 +132,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>powershell.exe -ExecutionPolicy Bypass "$(ProjectDir)build\Update-AssemblyVersion.ps1" -path '$(ProjectDir)Properties\AssemblyInfo.cs'
-if not %errorlevel% == 0 exit %errorlevel%
-</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
     <PostBuildEvent>powershell.exe -ExecutionPolicy Bypass "$(ProjectDir)build\Update-ModuleJson.ps1" -root '$(TargetDir)'
+if not %errorlevel% == 0 exit %errorlevel%
+powershell.exe -ExecutionPolicy Bypass "$(ProjectDir)build\Update-AssemblyVersion.ps1" -path '$(ProjectDir)Properties\AssemblyInfo.cs'
 if not %errorlevel% == 0 exit %errorlevel%</PostBuildEvent>
   </PropertyGroup>  
   
