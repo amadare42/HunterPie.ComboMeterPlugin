@@ -1,0 +1,5 @@
+﻿bin/
+obj/
+*.DotSettings.user
+.vs/
+.idea/

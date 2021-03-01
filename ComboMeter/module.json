@@ -1,0 +1,15 @@
+﻿{
+  "Name": "ComboMeter",
+  "DisplayName": "Combo Meter",
+  "Description": "Tracking and reporting your combos performance",
+  "Author": "Amadare",
+  "Version": "$version:ComboMeter.dll$",
+  "ReleaseDate": "$date$",
+  "Update": {
+    "UpdateUrl": "https://github.com/amadare42/HunterPie.ComboMeterPlugin/releases/latest/download/",
+    "MinimumVersion": "1.0.5.0",
+    "FileHashes": {
+      "ComboMeter.dll": "$version:ComboMeter.dll$"
+    }
+  }
+}

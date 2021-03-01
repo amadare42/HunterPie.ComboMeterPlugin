@@ -1,0 +1,75 @@
+﻿<gui:Widget x:Class="ComboMeter.Combos.ComboMeterWidget"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helpers="clr-namespace:HunterPie.GUI.Helpers;assembly=HunterPie.UI"
+             xmlns:gui="clr-namespace:HunterPie.GUI;assembly=HunterPie.UI"
+             Style="{StaticResource OVERLAY_WIDGET_STYLE}"
+             WindowStyle="None" AllowsTransparency="True" ShowInTaskbar="False" Topmost="True"
+             WidgetActive="True" SizeToContent="WidthAndHeight"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" >
+    <gui:Widget.Resources>
+        <Color x:Key="COMBOTEXT_FOREGROUND_HIGHLIGHT_COLOR">#EE9833</Color>
+        <Color x:Key="COMBOTEXT_FOREGROUND_DEFAULT_COLOR">#FFFFFF</Color>
+
+        <Storyboard x:Key="ColorStoryboard">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)">
+                <DiscreteColorKeyFrame Value="{StaticResource COMBOTEXT_FOREGROUND_HIGHLIGHT_COLOR}" KeyTime="0:0:0" />
+                <EasingColorKeyFrame Value="{StaticResource COMBOTEXT_FOREGROUND_DEFAULT_COLOR}" KeyTime="0:0:1">
+                    <EasingColorKeyFrame.EasingFunction>
+                        <PowerEase EasingMode="EaseIn" Power="3" />
+                    </EasingColorKeyFrame.EasingFunction>
+                </EasingColorKeyFrame>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </gui:Widget.Resources>
+    <Grid>
+        <Grid Name="Container">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="5" Color="Black" RenderingBias="Performance" Opacity="1" Direction="0" ShadowDepth="0" />
+            </Grid.Effect>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <helpers:Arc x:Name="TimerArc" Margin="0, 15" Width="30" Height="30" StartAngle="90" StrokeThickness="15" Stroke="White" VerticalAlignment="Center"/>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
+                <TextBlock Name="DamageTb" Text="{Binding DamageText, NotifyOnTargetUpdated=True}" VerticalAlignment="Center" FontWeight="Bold" FontSize="22">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource COMBOTEXT_FOREGROUND_DEFAULT_COLOR}"/>
+                                </Setter.Value>
+                            </Setter>
+
+                            <Style.Triggers>
+                                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                                    <BeginStoryboard Storyboard="{StaticResource ColorStoryboard}" />
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+
+
+        <Grid Visibility="{Binding DesignModeDetailsVisibility}">
+            <TextBlock Text="{Binding DesignModeDetails}" 
+                       VerticalAlignment="Top" HorizontalAlignment="Left"
+                       Style="{StaticResource OVERLAY_DESIGN_MODE_DEBUG}"/>
+            <TextBlock Text="ComboMeter" 
+                       TextAlignment="Center"
+                       Width="Auto"
+                       Foreground="Red"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                       Style="{StaticResource OVERLAY_DESIGN_MODE_DEBUG}"/>
+        </Grid>
+
+    </Grid>
+</gui:Widget>

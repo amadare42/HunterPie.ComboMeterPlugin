@@ -1,0 +1,22 @@
+﻿<Window x:Class="ComboMeter.TestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComboMeter.TestApp"
+        xmlns:configuration="clr-namespace:ComboMeter.Configuration;assembly=ComboMeter"
+        mc:Ignorable="d"
+        Background="Gray"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <Button Content="Hit" Click="HitClick"></Button>
+                <Button Content="Expedition done" Click="DoneClick"></Button>
+                <CheckBox Content="Design Mode" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsDesignMode}"></CheckBox>
+                <configuration:SettingsControl DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SettingsVm}"/>
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Window>
