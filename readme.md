@@ -19,6 +19,10 @@ After expedition summary is displayed:
 
 <!--<hide>-->
 
+## What's new
+
+- **0.1.1.0** fixed bug when player have negative combo value with multiple expeditions in a row
+
 ## Installation
 
 Use HunterPie's plugin manager to find and install "Combo Meter" plugin.

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using ComboMeter.Combos;
 using ComboMeter.Configuration;
@@ -43,13 +45,9 @@ namespace ComboMeter
                 member.OnSpawn += Member_OnSpawn;
                 member.OnDamageChange += Member_OnDamageChange;
             }
-
-            // if HunterPie launched when game is running, we need to set initial damage
-            if (!context.Player.InPeaceZone)
-            {
-                var me = context.Player.PlayerParty.Members.FirstOrDefault(m => m.IsMe);
-                if (me != null) this.comboService.SetInitialDamage(me.Damage);
-            }
+            
+            // if HunterPie launched when game is running, we need to set initial damage after player is scanned
+            if (!this.Context.Player.InPeaceZone) WaitForPlayerScan().ContinueWith(_ => SetInitialDamage());
 
             context.Player.OnPeaceZoneEnter += Player_OnPeaceZoneEnter;
             context.Player.OnPeaceZoneLeave += Player_OnPeaceZoneLeave;
@@ -69,6 +67,34 @@ namespace ComboMeter
             this.comboService.Stop();
             this.comboService = null;
             DestroyWidgets();
+        }
+        
+        /// <summary>
+        /// Hold thread until next player scan is finished.
+        /// </summary>
+        private async Task WaitForPlayerScan()
+        {
+            var semaphore = new SemaphoreSlim(0);
+            void Trigger(object sender, EventArgs args)
+            {
+                if (this.Context?.Player != null)
+                {
+                    this.Context.Player.OnPlayerScanFinished -= Trigger;
+                }
+
+                semaphore.Release();
+            }
+
+            if (this.Context?.Player == null)
+                return;
+
+            this.Context.Player.OnPlayerScanFinished += Trigger;
+
+            var evtReceived = await semaphore.WaitAsync(TimeSpan.FromSeconds(5));
+            if (!evtReceived)
+            {
+                Debugger.Warn("Timeout on expecting player scan!");
+            }
         }
 
         private void CreateWidgets()
@@ -98,7 +124,11 @@ namespace ComboMeter
             });
         }
 
-        private void Player_OnPeaceZoneLeave(object source, EventArgs args) => this.comboService.ClearRecords();
+        private async void Player_OnPeaceZoneLeave(object source, EventArgs args)
+        {
+            this.comboService.ClearRecords();
+            this.comboService.SetInitialDamage(0);
+        }
 
         private void Player_OnPeaceZoneEnter(object source, EventArgs args)
         {
@@ -120,6 +150,15 @@ namespace ComboMeter
             {
                 comboService.SetInitialDamage(member.Damage);
                 this.initialDamageIsSet = true;
+            }
+        }
+
+        private void SetInitialDamage()
+        {
+            if (!Context.Player.InPeaceZone)
+            {
+                var me = Context.Player.PlayerParty.Members.FirstOrDefault(m => m.IsMe);
+                if (me != null) this.comboService.SetInitialDamage(me.Damage);
             }
         }
 
